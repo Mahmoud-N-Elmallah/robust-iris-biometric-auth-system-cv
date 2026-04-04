@@ -6,7 +6,7 @@ __pycache__/
 # C extensions
 *.so
 DataSet/CASIA-iris-Thousand
-DataSet/allData.csv
+DataSet/iris_thousands.csv
 # Distribution / packaging
 .Python
 build/
