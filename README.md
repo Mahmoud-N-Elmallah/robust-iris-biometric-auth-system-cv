@@ -129,7 +129,7 @@ Micro-average AUC = **0.9997** - the model's confidence scores are almost perfec
 
 ### Confusion Matrix (sample of 25 classes)
 |![Confusion Matrix](plots/confusion_matrix.png)|
-The heatmap over classes 1000–1024 shows a perfect diagonal with zero off-diagonal confusion, consistent with the macro-average precision of 0.9545.
+The heatmap over classes 1000–1024 shows a perfect diagonal with almost no off-diagonal confusion, consistent with the macro-average precision of 0.9545.
 
 ### Top-k Accuracy
 
