@@ -235,3 +235,4 @@ Dataset: CASIA-Iris-Thousand, Institute of Automation, Chinese Academy of Scienc
 
 *Mahmoud - Physics Graduate, Ain Shams University | ITI Data Science & AI Diploma*  
 *GitHub: [@Mahmoud-N-Elmallah](https://github.com/Mahmoud-N-Elmallah)*
+*Linkedin: [@Mahmoud-N-Elmallah](https://www.linkedin.com/in/mahmoudnelmallah/)*
