@@ -202,7 +202,7 @@ cd robust-iris-biometric-auth-system-cv
 uv pip install -r requirements.txt
 
 # Download CASIA-Iris-Thousand and place at DataSet/CASIA-Iris-Thousand/
-# Dataset available at: http://biometrics.idealtest.org/
+# Dataset available at: http://biometrics.idealtest.org/ or from kaggle: https://www.kaggle.com/datasets/sondosaabed/casia-iris-thousand/data
 
 # Run data preparation
 jupyter nbconvert --to notebook --execute Data_preparation.ipynb
