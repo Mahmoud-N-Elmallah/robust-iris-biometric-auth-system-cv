@@ -124,11 +124,11 @@ The dashed red vertical line marks the epoch-60 augmentation change point. The p
 ## Evaluation
 
 ### ROC Curve (2000 classes, micro-average OvR)
-
+|![ROC Curve](plots/roc_curve.png)|
 Micro-average AUC = **0.9997** - the model's confidence scores are almost perfectly ranked across all 2,000 classes in a one-vs-rest sense. The ROC curve is indistinguishable from the ideal (0,0)→(0,1)→(1,1) corner.
 
 ### Confusion Matrix (sample of 25 classes)
-
+|![Confusion Matrix](plots/confusion_matrix.png)|
 The heatmap over classes 1000–1024 shows a perfect diagonal with zero off-diagonal confusion, consistent with the macro-average precision of 0.9545.
 
 ### Top-k Accuracy
