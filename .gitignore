@@ -2,13 +2,16 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
-# C extensions
-*.so
+#my ignores
 DataSet/CASIA-iris-Thousand
 DataSet/iris_thousands.csv
 iris_model_final_v1_epoch20.pth
 iris_model_final_v1.pth
+
+
+# C extensions
+*.so
+
 # Distribution / packaging
 .Python
 build/
