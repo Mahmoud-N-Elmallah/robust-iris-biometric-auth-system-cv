@@ -179,7 +179,9 @@ Distinguishing between **2,000 unique identities** with limited per-class sample
 * **Feature Orthogonality:** The near-perfect **ROC-AUC of 0.9997** indicates that the CNN has learned a set of nearly orthogonal basis functions. This allows for clear class separability even when the physical signal is partially occluded by eyelids or eyelashes (simulated via Random Erasing).
 
 ### NIR Illumination & Albedo Invariance
+
 The use of **ColorJitter (Brightness/Contrast $\pm 0.2$)** simulates physical variations in **Near-Infrared (NIR) LED intensity** and sensor gain. In pervasive sensing, the distance from the NIR source and the specific Albedo (reflectivity) of the subject's iris create non-uniform signals. This augmentation ensures the feature extractor focuses on topological textures that are independent of absolute photon counts.
+###
 ---
 
 ## Repository Structure
