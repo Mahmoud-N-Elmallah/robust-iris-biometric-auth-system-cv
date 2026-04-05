@@ -70,7 +70,7 @@ FC:       Flatten → Dropout(0.5) → Linear(512→1024) → ReLU
 
 **Key design decisions:**
 
-- **Global Average Pooling (GAP)** replaces a naive flatten after the final conv block. A direct flatten of 512×14×14 would produce a 100,352-dimensional vector before the FC layer , adding ~100M parameters and making training intractable. GAP collapses each feature map to a single scalar, preserving the 512 learned feature channels while eliminating spatial redundancy entirely.
+- **Global Average Pooling (GAP)** replaces a naive flatten after the final conv block. A direct flatten of 512×14×14 would produce a 100,352-dimensional vector before the FC layer , adding ~100M parameters and making training intractable. GAP collapses each feature map to a single scalar i.e it works as a feature searching engine where it doesnt care about where that position was present it just cares that the feature was present in the first place , preserving the 512 learned feature channels and reducing the parameter size of the fully connected layer significantly while eliminating spatial redundancy entirely (since the fully connected layer doesnt care about spatial correlation of the values of the filters anyway).
 
 - **BatchNorm in every convolutional block** stabilizes gradient flow across the four-stage depth, enabling training without learning rate warmup.
 
@@ -92,7 +92,7 @@ Standard geometric augmentations covering natural variation in iris capture alig
 
 ### Phase 2 - Epochs 60–80
 **Optimizer:** Adam (lr = 1×10⁻⁴)  
-**Augmentation:** + ColorJitter (brightness ±0.2, contrast ±0.2) + GaussianBlur (σ ∈ [0.1, 1.0]) + RandomErasing (p=0.2, scale 2–10%)
+**Augmentation:** + ColorJitter (brightness ±0.2, contrast ±0.2) + GaussianBlur (σ ∈ [0.1, 1.0]) + RandomErasing (p=0.2, scale 2–10%), these effects simulate the cases where the brightness of the images changes andd the gaussian blur accounts for the cameras getting out of focus since capturing iris images requires close proximity which can lose focus, and the random erasing handles cases where the light flares off the eyes creating hotspots of light making it hard to detect the iris patterns.
 
 At epoch 60, two simultaneous interventions were applied:
 
@@ -103,7 +103,7 @@ At epoch 60, two simultaneous interventions were applied:
    - *ColorJitter* - simulates variation in near-infrared illumination intensity across capture sessions
    - *RandomErasing* - simulates partial occlusion of the iris by eyelids, lashes, or specular reflection artifacts
 
-   This augmentation regime change causes the visible loss spike at epoch 60 in the training curve: training batches become harder than the model has previously seen, producing a transient accuracy drop before the model adapts to the more challenging distribution.
+   This augmentation scheme change causes the visible loss spike at epoch 60 in the training curve: training batches become harder than the model has previously seen, producing a transient accuracy drop before the model adapts to the more challenging but realistic  distribution.
 
 ### Phase 3 - Epochs 80–100
 **Optimizer:** Adam (lr = 1×10⁻⁵)  
