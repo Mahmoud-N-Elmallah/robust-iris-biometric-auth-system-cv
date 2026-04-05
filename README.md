@@ -146,7 +146,7 @@ In an operational biometric pipeline, top-5 accuracy is the deployment-relevant 
 |--------|-----------|--------|----------|
 | Macro Average | 0.83 | 0.88 | 0.85 |
 | Weighted Average | 0.83 | 0.88 | 0.85 |
-| **Overall Accuracy** | - | - | **0.88** |
+| **Overall Accuracy** |  **0.88** |
 
 The macro and weighted averages are identical - a direct consequence of the balanced class distribution (~10 images per class across all 2,000 classes). When every class contributes equally to both averages, their convergence confirms there are no dominant majority classes inflating the weighted score. Every iris identity is held to the same standard.
 
