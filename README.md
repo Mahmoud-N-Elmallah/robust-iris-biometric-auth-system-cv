@@ -1,4 +1,4 @@
-# Iris Recognition System — CASIA-Iris-Thousand
+# Iris Recognition System - CASIA-Iris-Thousand
 ### Large-Scale Biometric Identification via Custom CNN | 2000 Classes | PyTorch
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
@@ -31,7 +31,7 @@ The project was designed with real-world deployment constraints in mind: augment
 | Number of Classes | 2,000 |
 | Training Epochs | 100 |
 
-**On the top-5 accuracy:** In a 2,000-class identification setting, top-5 accuracy measures whether the correct iris identity appears anywhere in the model's five most confident predictions. Achieving **96.25%** means that for 96 out of every 100 iris samples, the ground-truth identity is within the model's top-5 ranked candidates — despite each class having only ~10 training images. In operational biometric systems, a top-5 shortlist feeds a secondary verification stage (e.g. liveness check or threshold-based accept/reject), making this the practically relevant deployment metric. The 7.25-point gap between top-1 (89.0%) and top-5 (96.25%) indicates that when the model is wrong on its first choice, it almost always recovers within the next four — a hallmark of confident, well-calibrated feature learning rather than confused prediction.
+**On the top-5 accuracy:** In a 2,000-class identification setting, top-5 accuracy measures whether the correct iris identity appears anywhere in the model's five most confident predictions. Achieving **96.25%** means that for 96 out of every 100 iris samples, the ground-truth identity is within the model's top-5 ranked candidates , despite each class having only ~10 training images. In operational biometric systems, a top-5 shortlist feeds a secondary verification stage (e.g. liveness check or threshold-based accept/reject), making this the practically relevant deployment metric. The 7.25-point gap between top-1 (89.0%) and top-5 (96.25%) indicates that when the model is wrong on its first choice, it almost always recovers within the next four which is a sign of well-calibrated feature learning rather than confused predictions.
 
 The separation between training accuracy (~65%) and validation accuracy (~89%) is a deliberate consequence of heavy augmentation applied exclusively to training data, making each training batch harder than clean evaluation conditions. This is a regularization feature, not a data issue.
 
@@ -39,10 +39,10 @@ The separation between training accuracy (~65%) and validation accuracy (~89%) i
 
 ## Dataset
 
-**CASIA-Iris-Thousand** — a standard biometric benchmark from the Chinese Academy of Sciences' Center for Biometrics and Security Research.
+**CASIA-Iris-Thousand** - a standard biometric benchmark from the Chinese Academy of Sciences' Center for Biometrics and Security Research.
 
 - **1,000 subjects**, each contributing left and right iris images → **2,000 unique classes**
-- ~10 images per class (heavily limited per-class data — a core challenge)
+- ~10 images per class (heavily limited per-class data)
 - Grayscale near-infrared imagery, center-cropped to 480×480 and resized to 224×224
 - Dataset split: **80% train / 10% validation / 10% test**, stratified by class
 
@@ -70,7 +70,7 @@ FC:       Flatten → Dropout(0.5) → Linear(512→1024) → ReLU
 
 **Key design decisions:**
 
-- **Global Average Pooling (GAP)** replaces a naive flatten after the final conv block. A direct flatten of 512×14×14 would produce a 100,352-dimensional vector before the FC layer — adding ~100M parameters and making training intractable. GAP collapses each feature map to a single scalar, preserving the 512 learned feature channels while eliminating spatial redundancy entirely.
+- **Global Average Pooling (GAP)** replaces a naive flatten after the final conv block. A direct flatten of 512×14×14 would produce a 100,352-dimensional vector before the FC layer , adding ~100M parameters and making training intractable. GAP collapses each feature map to a single scalar, preserving the 512 learned feature channels while eliminating spatial redundancy entirely.
 
 - **BatchNorm in every convolutional block** stabilizes gradient flow across the four-stage depth, enabling training without learning rate warmup.
 
@@ -84,13 +84,13 @@ FC:       Flatten → Dropout(0.5) → Linear(512→1024) → ReLU
 
 Training was conducted in three deliberate phases over 100 epochs, with learning rate and augmentation intensity adjusted based on observed training dynamics.
 
-### Phase 1 — Epochs 0–60
+### Phase 1 - Epochs 0–60
 **Optimizer:** Adam (lr = 3×10⁻⁴, weight_decay = 1×10⁻⁴)  
 **Augmentation:** RandomAffine (rotation ±10°, translate ±5%, scale ±2%)
 
-Standard geometric augmentations covering natural variation in iris capture alignment. The Karpathy constant (3×10⁻⁴) was used as the initial learning rate — an empirically reliable default for Adam on vision tasks.
+Standard geometric augmentations covering natural variation in iris capture alignment. The Karpathy constant (3×10⁻⁴) was used as the initial learning rate which is an empirically reliable default for Adam on vision tasks.
 
-### Phase 2 — Epochs 60–80
+### Phase 2 - Epochs 60–80
 **Optimizer:** Adam (lr = 1×10⁻⁴)  
 **Augmentation:** + ColorJitter (brightness ±0.2, contrast ±0.2) + GaussianBlur (σ ∈ [0.1, 1.0]) + RandomErasing (p=0.2, scale 2–10%)
 
@@ -99,13 +99,13 @@ At epoch 60, two simultaneous interventions were applied:
 1. **Learning rate decay (3×10⁻⁴ → 1×10⁻⁴):** The model had reached a plateau in val accuracy; reducing lr allows finer weight updates without overshooting flat minima.
 
 2. **Augmentation expansion:** Three new transforms were added with explicit physical motivation:
-   - *GaussianBlur* — simulates iris cameras operating out of focal depth, a common real-world failure mode
-   - *ColorJitter* — simulates variation in near-infrared illumination intensity across capture sessions
-   - *RandomErasing* — simulates partial occlusion of the iris by eyelids, lashes, or specular reflection artifacts
+   - *GaussianBlur* - simulates iris cameras operating out of focal depth, a common real-world failure mode
+   - *ColorJitter* - simulates variation in near-infrared illumination intensity across capture sessions
+   - *RandomErasing* - simulates partial occlusion of the iris by eyelids, lashes, or specular reflection artifacts
 
    This augmentation regime change causes the visible loss spike at epoch 60 in the training curve: training batches become harder than the model has previously seen, producing a transient accuracy drop before the model adapts to the more challenging distribution.
 
-### Phase 3 — Epochs 80–100
+### Phase 3 - Epochs 80–100
 **Optimizer:** Adam (lr = 1×10⁻⁵)  
 Final fine-convergence phase with minimal learning rate, allowing the optimizer to settle into a sharper minimum without oscillation.
 
@@ -125,7 +125,7 @@ The dashed red vertical line marks the epoch-60 augmentation change point. The p
 
 ### ROC Curve (2000 classes, micro-average OvR)
 
-Micro-average AUC = **0.9997** — the model's confidence scores are almost perfectly ranked across all 2,000 classes in a one-vs-rest sense. The ROC curve is indistinguishable from the ideal (0,0)→(0,1)→(1,1) corner.
+Micro-average AUC = **0.9997** - the model's confidence scores are almost perfectly ranked across all 2,000 classes in a one-vs-rest sense. The ROC curve is indistinguishable from the ideal (0,0)→(0,1)→(1,1) corner.
 
 ### Confusion Matrix (sample of 25 classes)
 
@@ -140,17 +140,17 @@ The heatmap over classes 1000–1024 shows a perfect diagonal with zero off-diag
 
 In an operational biometric pipeline, top-5 accuracy is the deployment-relevant metric: the model's five most confident candidates are passed to a secondary verification stage. A 96.25% top-5 rate on 2,000 classes with ~10 training samples per class represents strong few-shot generalization.
 
-### Classification Report (Full Test Set — 2,000 Classes)
+### Classification Report (Full Test Set - 2,000 Classes)
 
 | Metric | Precision | Recall | F1-Score |
 |--------|-----------|--------|----------|
 | Macro Average | 0.83 | 0.88 | 0.85 |
 | Weighted Average | 0.83 | 0.88 | 0.85 |
-| **Overall Accuracy** | — | — | **0.88** |
+| **Overall Accuracy** | - | - | **0.88** |
 
-The macro and weighted averages are identical — a direct consequence of the balanced class distribution (~10 images per class across all 2,000 classes). When every class contributes equally to both averages, their convergence confirms there are no dominant majority classes inflating the weighted score. Every iris identity is held to the same standard.
+The macro and weighted averages are identical - a direct consequence of the balanced class distribution (~10 images per class across all 2,000 classes). When every class contributes equally to both averages, their convergence confirms there are no dominant majority classes inflating the weighted score. Every iris identity is held to the same standard.
 
-The 5-point gap between macro precision (0.83) and macro recall (0.88) indicates the model is slightly recall-oriented: it recovers true positives reliably but occasionally assigns a correct class label to a sample from a closely related class. In a biometric identification context, high recall is the preferable failure mode — missing no true match is more critical than eliminating all false candidates, particularly when a secondary verification stage handles shortlist filtering.
+The 5-point gap between macro precision (0.83) and macro recall (0.88) indicates the model is slightly recall-oriented: it recovers true positives reliably but occasionally assigns a correct class label to a sample from a closely related class. In a biometric identification context, high recall is the preferable failure mode since missing no true match is more critical than eliminating all false candidates, particularly when a secondary verification stage handles shortlist filtering.
 
 ### Precision-Recall
 
@@ -159,7 +159,7 @@ The 5-point gap between macro precision (0.83) and macro recall (0.88) indicates
 | Micro-Average PR-AUC | 0.9383 |
 | Macro-Average Precision | 0.9545 |
 
-The macro-average precision from PR-AUC (0.9545) is higher than the classification report's hard-threshold macro precision (0.83) because they measure different things: the report precision reflects argmax decisions only, while PR-AUC integrates across all confidence thresholds — capturing the model's full discriminative capacity beyond the top-1 boundary.
+The macro-average precision from PR-AUC (0.9545) is higher than the classification report's hard-threshold macro precision (0.83) because they measure different things: the report precision reflects argmax decisions only, while PR-AUC integrates across all confidence thresholds thus capturing the model's full discriminative capacity beyond the top-1 boundary.
 
 ---
 
@@ -233,5 +233,5 @@ Dataset: CASIA-Iris-Thousand, Institute of Automation, Chinese Academy of Scienc
 
 ---
 
-*Mahmoud — Physics Graduate, Ain Shams University | ITI Data Science & AI Diploma*  
+*Mahmoud - Physics Graduate, Ain Shams University | ITI Data Science & AI Diploma*  
 *GitHub: [@Mahmoud-N-Elmallah](https://github.com/Mahmoud-N-Elmallah)*
