@@ -195,11 +195,11 @@ iris-recognition/
 
 ```bash
 # Clone the repository
-git clone https://github.com/Jaxxy99/iris-recognition.git
-cd iris-recognition
+git clone https://github.com/Mahmoud-N-Elmallah/robust-iris-biometric-auth-system-cv.git
+cd robust-iris-biometric-auth-system-cv
 
 # Install dependencies
-pip install torch torchvision pandas scikit-learn matplotlib seaborn pillow
+uv pip install -r requirements.txt
 
 # Download CASIA-Iris-Thousand and place at DataSet/CASIA-Iris-Thousand/
 # Dataset available at: http://biometrics.idealtest.org/
