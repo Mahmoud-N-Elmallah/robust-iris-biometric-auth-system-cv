@@ -3,9 +3,9 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org)
-[![Dataset](https://img.shields.io/badge/Dataset-CASIA--Iris--Thousand-4A90D9?style=flat-square)](http://biometrics.idealtest.org/)(https://www.kaggle.com/datasets/sondosaabed/casia-iris-thousand/data)
+[![Dataset](https://img.shields.io/badge/Dataset-CASIA--Iris--Thousand-4A90D9?style=flat-square)](https://www.kaggle.com/datasets/sondosaabed/casia-iris-thousand/data)
 [![AUC](https://img.shields.io/badge/ROC--AUC-0.9997-2ECC71?style=flat-square)]()
-[![Val Acc](https://img.shields.io/badge/Val%20Accuracy-89%25-2ECC71?style=flat-square)]()
+[![Test Acc](https://img.shields.io/badge/Val%20Accuracy-88%25-2ECC71?style=flat-square)]()
 
 ---
 
@@ -22,7 +22,9 @@ The project was designed with real-world deployment constraints in mind: augment
 | Metric | Value |
 |--------|-------|
 | Validation Accuracy (Top-1) | **89.0%** |
-| Validation Accuracy (Top-5) | **96.25%** |
+| Validation Accuracy (Top-5) | **97.35%** |
+| Test Accuracy (Top-1) | **88.1%** |
+| Test Accuracy (Top-5) | **96.25%** |
 | Test ROC-AUC (micro-avg, OvR) | **0.9997** |
 | PR-AUC (micro-avg) | **0.9383** |
 | Macro-Average Precision | **0.9545** |
