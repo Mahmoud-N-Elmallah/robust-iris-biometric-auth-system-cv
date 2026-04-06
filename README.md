@@ -5,7 +5,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org)
 [![Dataset](https://img.shields.io/badge/Dataset-CASIA--Iris--Thousand-4A90D9?style=flat-square)](https://www.kaggle.com/datasets/sondosaabed/casia-iris-thousand/data)
 [![AUC](https://img.shields.io/badge/ROC--AUC-0.9997-2ECC71?style=flat-square)]()
-[![Test Acc](https://img.shields.io/badge/Val%20Accuracy-88%25-2ECC71?style=flat-square)]()
+[![Test Acc](https://img.shields.io/badge/Test%20Accuracy-88%25-2ECC71?style=flat-square)]()
 
 ---
 
