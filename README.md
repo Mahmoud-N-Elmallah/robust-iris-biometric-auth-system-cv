@@ -31,7 +31,7 @@ The project was designed with real-world deployment constraints in mind: augment
 | Number of Classes | 2,000 |
 | Training Epochs | 100 |
 
-**On the top-5 accuracy:** In a 2,000-class identification setting, top-5 accuracy measures whether the correct iris identity appears anywhere in the model's five most confident predictions. Achieving **96.25%** means that for 96 out of every 100 iris samples, the ground-truth identity is within the model's top-5 ranked candidates, despite each class having only ~10 training images. In operational biometric systems, a top-5 shortlist feeds a secondary verification stage (e.g., liveness check or threshold-based accept/reject), making this the practically relevant deployment metric. The 8.25-point gap between top-1 (88.0%) and top-5 (96.25%) indicates that when the model is wrong on its first choice, it almost always recovers within the next four—a sign of well-calibrated feature learning rather than confused predictions.
+**On the top-5 accuracy:** In a 2,000-class identification setting, top-5 accuracy measures whether the correct iris identity appears anywhere in the model's five most confident predictions. Achieving **96.25%** means that for 96 out of every 100 iris samples, the ground-truth identity is within the model's top-5 ranked candidates, despite each class having only ~10 training images. In operational biometric systems, a top-5 shortlist feeds a secondary verification stage (e.g., liveness check or threshold-based accept/reject), making this the practically relevant deployment metric. The 8.25-point gap between top-1 (88.0%) and top-5 (96.25%) indicates that when the model is wrong on its first choice, it almost always recovers within the next four,a sign of well-calibrated feature learning.
 
 **Deployment relevance:** A 96.25% top-5 identification rate on 2,000 classes from minimal per-class samples demonstrates robust performance for security-critical biometric verification pipelines, where the model's output feeds secondary authentication stages.
 
@@ -54,7 +54,7 @@ The low per-class sample count (≈10 images) makes this a genuinely hard few-sh
 
 ## Architecture
 
-A custom VGG-style CNN designed from scratch for single-channel (grayscale) iris imagery. The design prioritizes parameter efficiency through Global Average Pooling and strong regularization through BatchNorm and dual Dropout.
+A custom VGG-style CNN designed from scratch for single-channel (grayscale) NIR iris imagery. The design prioritizes parameter efficiency through Global Average Pooling and strong regularization through BatchNorm and dual Dropout.
 
 ```
 Input: 1 × 224 × 224 (grayscale iris image)
@@ -72,7 +72,7 @@ FC:       Flatten → Dropout(0.5) → Linear(512→1024) → ReLU
 
 **Key design decisions:**
 
-- **Global Average Pooling (GAP)** replaces a naive flatten after the final conv block. A direct flatten of 512×14×14 would produce a 100,352-dimensional vector before the FC layer, adding ~100M parameters and making training intractable. GAP collapses each feature map to a single scalar, preserving the 512 learned feature channels while reducing FC layer parameters significantly. Critically, GAP computes the expected value of each feature map, achieving **spatial phase invariance**—the model becomes invariant to the exact position of iris features within the sensor frame.
+- **Global Average Pooling (GAP)** replaces a naive flatten after the final conv block. A direct flatten of 512×14×14 would produce a 100,352-dimensional vector before the FC layer, adding ~100M parameters and making training intractable. GAP collapses each feature map to a single scalar, preserving the 512 learned feature channels while reducing FC layer parameters significantly. Critically, GAP computes the expected value of each feature map, achieving **spatial phase invariance** the model becomes invariant to the exact position of iris features within the sensor frame.
 
 - **BatchNorm in every convolutional block** stabilizes gradient flow across the four-stage depth, enabling training without learning rate warmup.
 
@@ -145,7 +145,7 @@ In an operational biometric pipeline, top-5 accuracy is the deployment-relevant 
 | Weighted Average | 0.83 | 0.88 | 0.85 |
 | **Overall Accuracy** | - | - | **0.88** |
 
-The macro and weighted averages are identical—a direct consequence of the balanced class distribution (~10 images per class across all 2,000 classes). When every class contributes equally to both averages, their convergence confirms there are no dominant majority classes inflating the weighted score. Every iris identity is held to the same standard.
+The macro and weighted averages are identical which is a direct consequence of the balanced class distribution (~10 images per class across all 2,000 classes). When every class contributes equally to both averages, their convergence confirms there are no dominant majority classes inflating the weighted score. Every iris identity is held to the same standard.
 
 The 5-point gap between macro precision (0.83) and macro recall (0.88) indicates the model is slightly recall-oriented: it recovers true positives reliably but occasionally assigns a correct class label to a sample from a closely related class. In a biometric identification context, high recall is the preferable failure mode since missing no true match is more critical than eliminating all false candidates, particularly when a secondary verification stage handles shortlist filtering.
 
